@@ -14,7 +14,7 @@ To enable the website to delete, get, update and post data stored in the databas
 - Install dependencies by running these commands in your terminal :
 
 ```
-cd Backend
+cd BackEnd
 ```
 
 ```
@@ -24,7 +24,7 @@ npm i
 - Start the API by running these commands in your terminal :
 
 ```
-cd Backend
+cd BackEnd
 ```
 
 ```
