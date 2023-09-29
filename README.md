@@ -6,6 +6,31 @@ Sophie can login to manage her works displayed on her website.
 
 Sophie website can be seen on your web browser by opening the "index.html" file in the "FrontEnd" folder with the "Live Server" extension from your VSCode editor. The tab to be opened URL is by default : http://localhost:5500/FrontEnd/.
 
+## How to launch the (back-end) API
+
+To enable the website to delete, get, update and post data stored in the database, the API needs to be started.
+
+- You need to have Node and npm installed on your machine.
+- Install dependencies by running these commands in your terminal :
+
+```
+cd Backend
+```
+
+```
+npm i
+```
+
+- Start the API by running these commands in your terminal :
+
+```
+cd Backend
+```
+
+```
+npm start
+```
+
 ## External links
 
 - [Website mock-ups on Figma](https://www.figma.com/file/kfKHknHySoTibZfdolGAX6/Sophie-Bluel---Desktop?type=design&node-id=0-1&mode=design&t=HiMvMV8I1GbN2d02-0)
