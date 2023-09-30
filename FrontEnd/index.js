@@ -1,4 +1,5 @@
-import { getAllCategories, getAllWorks } from './fetch.js'
+import { getAllWorks } from './fetch.js'
+import { Work } from './models/work.js'
 import {
   findAllHtmlElementsByCssClass,
   findHtmlElementById,
@@ -10,9 +11,23 @@ import {
 
 const galleryHtmlElement = findHtmlElementById('gallery')
 
-// Get all categories and works from the API
-const allCategories = await getAllCategories()
+// Get all works from the API and deduce from them all categories to display
 const allWorks = await getAllWorks()
+const allCategoryIds = [...new Set(allWorks.map((work) => work.categoryId))]
+/**
+ * @type {Category[]}
+ */
+const allCategories = allCategoryIds.map((categoryId) => {
+  /**
+   * @type {Work}
+   */
+  const work = allWorks.find((work) => work.categoryId === categoryId)
+  const workCategoryName = work.category.name
+  return {
+    id: categoryId,
+    name: workCategoryName,
+  }
+})
 
 // Add category filters on the DOM created from the categories fetched from the API
 const categoryFilterContainerHtmlElement =
