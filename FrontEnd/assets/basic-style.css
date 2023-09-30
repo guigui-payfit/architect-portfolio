@@ -1,8 +1,20 @@
 body {
-  max-width: 1140px;
-  margin: auto;
   font-family: 'Work Sans';
   font-size: 14px;
+  margin: auto;
+  max-width: 1140px;
+}
+
+button {
+  align-items: center;
+  border: 0;
+  border-radius: 60px;
+  cursor: pointer;
+  display: flex;
+  font-family: 'Syne';
+  font-weight: 700;
+  justify-content: center;
+  min-width: 100px;
 }
 
 footer nav ul {
@@ -12,12 +24,12 @@ footer nav ul {
 }
 
 h1 {
+  color: var(--secondary);
   display: flex;
   flex-direction: column;
   font-family: 'Syne';
   font-size: 22px;
   font-weight: 800;
-  color: #b1663c;
 }
 
 h1 > span {
@@ -27,10 +39,10 @@ h1 > span {
 }
 
 h2 {
+  color: var(--primary);
   font-family: 'Syne';
-  font-weight: 700;
   font-size: 30px;
-  color: #1d6154;
+  font-weight: 700;
 }
 
 header {
@@ -40,17 +52,17 @@ header {
 }
 
 li:hover {
-  color: #b1663c;
+  color: var(--secondary);
 }
 
 nav li {
-  padding: 0 10px;
   font-size: 1.2em;
+  padding: 0 10px;
 }
 
 nav ul {
-  display: flex;
   align-items: center;
+  display: flex;
   list-style-type: none;
 }
 

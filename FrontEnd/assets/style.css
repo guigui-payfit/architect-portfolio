@@ -2,8 +2,33 @@
 @import './basic-style.css';
 @import './contact.css';
 @import './introduction.css';
+@import './variables.css';
 
-.gallery {
+.category-filter {
+  background-color: white;
+  border: 1px solid var(--primary);
+  border-radius: 60px;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 700;
+  height: 37px;
+  line-height: 19px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.category-filter:hover,
+.category-filter.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+#category-filters {
+  display: flex;
+  justify-content: center;
+}
+
+#gallery {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -11,11 +36,15 @@
   grid-row-gap: 20px;
 }
 
-.gallery img {
+#gallery img {
   width: 100%;
 }
 
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
+}
+
+#portfolio ul {
+  margin-bottom: 30px;
 }
