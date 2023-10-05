@@ -1,10 +1,11 @@
 #introduction {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 #introduction article {
   flex: 1;
+  max-width: 412px;
 }
 
 #introduction figure {
@@ -17,10 +18,10 @@
 
 #introduction img {
   display: block;
-  margin: auto;
-  width: 80%;
+  width: 474px;
 }
 
 #introduction p {
+  line-height: 16.4px;
   margin-bottom: 0.5em;
 }

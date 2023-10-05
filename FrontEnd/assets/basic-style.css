@@ -1,8 +1,24 @@
+a {
+  color: black;
+}
+
+a:hover {
+  color: var(--secondary);
+}
+
 body {
+  align-items: center;
+  background-color: var(--background);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
   font-family: 'Work Sans';
   font-size: 14px;
-  margin: auto;
-  max-width: 1140px;
+  min-height: 1024px;
+}
+
+body > main {
+  flex: 1;
 }
 
 button {
@@ -17,10 +33,37 @@ button {
   min-width: 100px;
 }
 
+button[type='submit'] {
+  background-color: var(--primary);
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  color: white;
+  font-size: 1em;
+  height: 36px;
+  margin: 3em auto 2em auto;
+  width: 179px;
+}
+
+footer {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  font-weight: 300;
+  height: 60px;
+  justify-content: flex-end;
+  min-width: 1440px;
+}
+
 footer nav ul {
   display: flex;
   justify-content: flex-end;
-  margin: 2em;
+  margin-right: 107px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  text-align: left;
 }
 
 h1 {
@@ -46,13 +89,38 @@ h2 {
 }
 
 header {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   margin: 50px 0;
+  width: 1140px;
+}
+
+header li a {
+  margin-right: 2em;
+  width: 55px;
+}
+
+input {
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  font-size: 1.2em;
+  height: 50px;
+  padding: 0 0.5em;
+}
+
+label {
+  font-weight: 500;
+  margin: 2em 0 0.7em 0;
 }
 
 li:hover {
   color: var(--secondary);
+}
+
+main {
+  margin: auto;
+  max-width: 978px;
 }
 
 nav li {
@@ -68,4 +136,14 @@ nav ul {
 
 section {
   margin: 50px 0;
+}
+
+strong {
+  font-weight: 700;
+}
+
+textarea {
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  padding: 0.5em;
 }
