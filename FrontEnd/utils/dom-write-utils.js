@@ -1,3 +1,22 @@
+import { findAllHtmlElementsByCssClass } from './dom-read-utils.js'
+
+/**
+ * This function disables website administrator-only features.
+ * Only administrators can authenticate.
+ */
+export function disableAdminFeatures() {
+  const loggedInOnlyHtmlElements =
+    findAllHtmlElementsByCssClass('logged-in-only')
+  loggedInOnlyHtmlElements.forEach((htmlElement) =>
+    htmlElement.classList.add('hidden')
+  )
+  const loggedOutOnlyHtmlElements =
+    findAllHtmlElementsByCssClass('logged-out-only')
+  loggedOutOnlyHtmlElements.forEach((htmlElement) =>
+    htmlElement.classList.remove('hidden')
+  )
+}
+
 /**
  * @param {Work[]} allWorks - all works fetched from the API
  * @param {number | undefined} categoryId - category id in database
@@ -19,6 +38,23 @@ export function displayWorksByCategoryId(
 					<figcaption>${work.title}</figcaption>
 				</figure>`
   }
+}
+
+/**
+ * This function enables website administrator-only features.
+ * Only administrators can authenticate.
+ */
+export function enableAdminFeatures() {
+  const loggedInOnlyHtmlElements =
+    findAllHtmlElementsByCssClass('logged-in-only')
+  loggedInOnlyHtmlElements.forEach((htmlElement) =>
+    htmlElement.classList.remove('hidden')
+  )
+  const loggedOutOnlyHtmlElements =
+    findAllHtmlElementsByCssClass('logged-out-only')
+  loggedOutOnlyHtmlElements.forEach((htmlElement) =>
+    htmlElement.classList.add('hidden')
+  )
 }
 
 /**

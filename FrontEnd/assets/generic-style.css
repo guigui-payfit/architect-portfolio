@@ -1,0 +1,7 @@
+.error {
+  color: var(--error);
+}
+
+.hidden {
+  display: none !important;
+}

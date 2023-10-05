@@ -1,5 +1,15 @@
+@import './reset.css';
+@import './basic-style.css';
+@import './generic-style.css';
+@import './variables.css';
+
 a strong {
   font-weight: 600;
+}
+
+p {
+  margin-top: 1.5em;
+  text-align: center;
 }
 
 #forgotten-password {
@@ -19,6 +29,6 @@ a strong {
   flex-direction: column;
 }
 
-#login input {
+#login-form input {
   min-width: 379px;
 }
