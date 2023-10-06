@@ -5,4 +5,7 @@ html {
   --primary: #1d6154;
   --secondary: #b1663c;
   --text: #3d3d3d;
+
+  /* Transitions */
+  --transition: all 0.3s;
 }

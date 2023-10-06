@@ -1,0 +1,65 @@
+#project-management-dialog-gallery {
+  display: grid;
+  grid-gap: 1.5em 0.6em;
+  grid-template-columns: repeat(5, 1fr);
+  margin: 4em 0;
+  max-width: 420px;
+}
+
+#project-management-dialog-link {
+  margin-left: 25em;
+  position: absolute;
+}
+
+#project-management-dialog-wrapper hr {
+  max-width: 420px;
+}
+
+#project-management-dialog-wrapper img {
+  max-height: 103px;
+}
+
+#project-management-dialog-wrapper #cross-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+#project-management-dialog-wrapper #dialog-title {
+  color: black;
+  font-size: 26px;
+  line-height: 30px;
+}
+
+#project-management-dialog-wrapper .image-wrapper {
+  position: relative;
+}
+
+#project-management-dialog-wrapper .image-wrapper .trash-icon-container {
+  align-items: center;
+  background-color: black;
+  border-radius: 2px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  height: 17px;
+  justify-content: center;
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  transition: var(--transition);
+  width: 17px;
+}
+
+#project-management-dialog-wrapper .image-wrapper .trash-icon-container:hover {
+  background-color: var(--text);
+  color: var(--error);
+}
+
+#project-management-dialog-wrapper .image-wrapper .trash-icon-container i {
+  font-size: 11px;
+}
+
+#project-management-dialog-wrapper .primary-button {
+  min-width: 237px;
+}

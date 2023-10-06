@@ -64,8 +64,21 @@
 		<section id="portfolio">
 			<div id="portfolio-title">
 				<h2>Mes Projets</h2>
-				<a class="hidden logged-in-only" href="#"><i class="fa-regular fa-pen-to-square"></i>modifier</a>
+				<a class="hidden logged-in-only" href="#project-management-dialog" id="project-management-dialog-link"><i
+						class="fa-regular fa-pen-to-square"></i>modifier</a>
 			</div>
+			<aside aria-hidden="true" aria-labelledby="dialog-title" class="dialog hidden" id="project-management-dialog"
+				role="dialog">
+				<div class="dialog-wrapper" id="project-management-dialog-wrapper">
+					<div id="cross-container">
+						<i class="dialog-closing-cross fa-solid fa-xmark"></i>
+					</div>
+					<h3 id="dialog-title">Galerie photo</h3>
+					<div id="project-management-dialog-gallery"></div>
+					<hr>
+					<button class="primary-button">Ajouter une photo</button>
+				</div>
+			</aside>
 			<ul id="category-filters">
 				<li><button class="category-filter logged-out-only" id="default-category-filter">Tous</button></li>
 			</ul>
@@ -81,7 +94,7 @@
 				<input type="email" name="email" id="email">
 				<label for="message">Message</label>
 				<textarea name="message" id="message" cols="30" rows="10"></textarea>
-				<button type="submit">Envoyer</button>
+				<button class="primary-button" type="submit">Envoyer</button>
 			</form>
 		</section>
 	</main>

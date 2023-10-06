@@ -9,6 +9,7 @@ import {
 import {
   displayWorksByCategoryId,
   enableAdminFeatures,
+  openProjectManagementDialog,
   setFilterAsActive,
 } from './utils/dom-write-utils.js'
 
@@ -19,8 +20,16 @@ const allWorks = await getAllWorks()
 const bearerToken = getCookieValue('token')
 if (bearerToken !== undefined && (await isAuthenticated(bearerToken))) {
   enableAdminFeatures()
+
   const logoutHtmlElement = findHtmlElementById('logout')
   logoutHtmlElement.addEventListener('click', logout)
+
+  const projectManagementDialogLink = findHtmlElementById(
+    'project-management-dialog-link'
+  )
+  projectManagementDialogLink.addEventListener('click', () => {
+    openProjectManagementDialog(allWorks)
+  })
 } else {
   // Deduce from fetched works all not empty categories when the user is not authenticated
   const allCategoryIds = [...new Set(allWorks.map((work) => work.categoryId))]

@@ -1,8 +1,12 @@
-import { findAllHtmlElementsByCssClass } from './dom-read-utils.js'
+import { Work } from '../models/work.js'
+import {
+  findAllHtmlElementsByCssClass,
+  findHtmlElementById,
+} from './dom-read-utils.js'
 
 /**
  * This function disables website administrator-only features.
- * Only administrators can authenticate.
+ * Only administrators can be authenticated.
  */
 export function disableAdminFeatures() {
   const loggedInOnlyHtmlElements =
@@ -42,7 +46,7 @@ export function displayWorksByCategoryId(
 
 /**
  * This function enables website administrator-only features.
- * Only administrators can authenticate.
+ * Only administrators can be authenticated.
  */
 export function enableAdminFeatures() {
   const loggedInOnlyHtmlElements =
@@ -54,6 +58,50 @@ export function enableAdminFeatures() {
     findAllHtmlElementsByCssClass('logged-out-only')
   loggedOutOnlyHtmlElements.forEach((htmlElement) =>
     htmlElement.classList.add('hidden')
+  )
+}
+
+/**
+ * This method opens the project management dialog.
+ * @param {Work[]} allWorks - all works fetched from the API
+ */
+export function openProjectManagementDialog(allWorks) {
+  const projectManagementDialogHtmlElement = findHtmlElementById(
+    'project-management-dialog'
+  )
+  projectManagementDialogHtmlElement.classList.remove('hidden')
+  projectManagementDialogHtmlElement.removeAttribute('aria-hidden')
+  projectManagementDialogHtmlElement.setAttribute('aria-modal', 'true')
+
+  const projectManagementDialogGalleryHtmlElement = findHtmlElementById(
+    'project-management-dialog-gallery'
+  )
+  displayWorksInsideProjectManagementDialog(
+    allWorks,
+    projectManagementDialogGalleryHtmlElement
+  )
+
+  projectManagementDialogHtmlElement.addEventListener(
+    'click',
+    closeProjectManagementDialog
+  )
+  const projectManagementDialogWrapperHtmlElement = findHtmlElementById(
+    'project-management-dialog-wrapper'
+  )
+  projectManagementDialogWrapperHtmlElement.addEventListener(
+    'click',
+    (event) => {
+      event.stopPropagation()
+    }
+  )
+  const projectManagementDialogClosingCrossHtmlElement =
+    findAllHtmlElementsByCssClass(
+      'dialog-closing-cross',
+      projectManagementDialogWrapperHtmlElement
+    )[0]
+  projectManagementDialogClosingCrossHtmlElement.addEventListener(
+    'click',
+    closeProjectManagementDialog
   )
 }
 
@@ -70,4 +118,35 @@ export function setFilterAsActive(filterHtmlElement, allFilterHtmlElements) {
   }
 
   filterHtmlElement.classList.toggle('active')
+}
+
+/**
+ * This method closes the project management dialog.
+ */
+function closeProjectManagementDialog() {
+  const projectManagementDialog = findHtmlElementById(
+    'project-management-dialog'
+  )
+  projectManagementDialog.classList.add('hidden')
+  projectManagementDialog.setAttribute('aria-hidden', 'true')
+  projectManagementDialog.removeAttribute('aria-modal')
+}
+
+/**
+ * @param {Work[]} allWorks - all works fetched from the API
+ * @param {HTMLElement} parentHtmlElement - HTML element in which to display works
+ */
+function displayWorksInsideProjectManagementDialog(
+  allWorks,
+  parentHtmlElement
+) {
+  parentHtmlElement.innerHTML = ''
+  for (let work of allWorks) {
+    parentHtmlElement.innerHTML += `<div class="image-wrapper">
+      <img src=${work.imageUrl} alt=${work.title}>
+      <div class="trash-icon-container">
+        <i class="fa-solid fa-trash-can"></i>
+      </div>
+    </div>`
+  }
 }

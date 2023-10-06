@@ -3,6 +3,7 @@
 @import './contact.css';
 @import './generic-style.css';
 @import './introduction.css';
+@import './project-management-dialog.css';
 @import './variables.css';
 
 .category-filter {
@@ -70,9 +71,4 @@
   justify-content: center;
   margin-bottom: 1em;
   position: relative;
-}
-
-#portfolio-title a {
-  margin-left: 25em;
-  position: absolute;
 }
