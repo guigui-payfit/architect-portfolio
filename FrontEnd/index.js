@@ -1,4 +1,4 @@
-import { isAuthenticated } from './auth/auth.js'
+import { isAuthenticated, logout } from './auth/auth.js'
 import { getAllWorks } from './api/fetch.js'
 import { Work } from './models/work.js'
 import { getCookieValue } from './utils/cookie.js'
@@ -19,6 +19,8 @@ const allWorks = await getAllWorks()
 const bearerToken = getCookieValue('token')
 if (bearerToken !== undefined && (await isAuthenticated(bearerToken))) {
   enableAdminFeatures()
+  const logoutHtmlElement = findHtmlElementById('logout')
+  logoutHtmlElement.addEventListener('click', logout)
 } else {
   // Deduce from fetched works all not empty categories when the user is not authenticated
   const allCategoryIds = [...new Set(allWorks.map((work) => work.categoryId))]
