@@ -27,9 +27,10 @@ if (bearerToken !== undefined && (await isAuthenticated(bearerToken))) {
   const projectManagementDialogLink = findHtmlElementById(
     'project-management-dialog-link'
   )
-  projectManagementDialogLink.addEventListener('click', () => {
-    openProjectManagementDialog(allWorks)
-  })
+  projectManagementDialogLink.addEventListener(
+    'click',
+    openProjectManagementDialog
+  )
 } else {
   // Deduce from fetched works all not empty categories when the user is not authenticated
   const allCategoryIds = [...new Set(allWorks.map((work) => work.categoryId))]

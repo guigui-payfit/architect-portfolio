@@ -1,4 +1,6 @@
+import { deleteWork, getAllWorks } from '../api/fetch.js'
 import { Work } from '../models/work.js'
+import { getCookieValue } from './cookie.js'
 import {
   findAllHtmlElementsByCssClass,
   findHtmlElementById,
@@ -37,7 +39,7 @@ export function displayWorksByCategoryId(
       ? allWorks
       : allWorks.filter((work) => work.categoryId === categoryId)
   for (let work of worksToDisplay) {
-    parentHtmlElement.innerHTML += `<figure>
+    parentHtmlElement.innerHTML += `<figure data-id=${work.id}>
 					<img src=${work.imageUrl} alt=${work.title}>
 					<figcaption>${work.title}</figcaption>
 				</figure>`
@@ -63,9 +65,9 @@ export function enableAdminFeatures() {
 
 /**
  * This method opens the project management dialog.
- * @param {Work[]} allWorks - all works fetched from the API
  */
-export function openProjectManagementDialog(allWorks) {
+export async function openProjectManagementDialog() {
+  const allWorks = await getAllWorks()
   const projectManagementDialogHtmlElement = findHtmlElementById(
     'project-management-dialog'
   )
@@ -142,11 +144,33 @@ function displayWorksInsideProjectManagementDialog(
 ) {
   parentHtmlElement.innerHTML = ''
   for (let work of allWorks) {
-    parentHtmlElement.innerHTML += `<div class="image-wrapper">
-      <img src=${work.imageUrl} alt=${work.title}>
+    const imageWrapperHtmlElement = document.createElement('div')
+    imageWrapperHtmlElement.classList.add('image-wrapper')
+    imageWrapperHtmlElement.dataset.id = work.id.toString()
+    imageWrapperHtmlElement.innerHTML = `<img src=${work.imageUrl} alt=${work.title}>
       <div class="trash-icon-container">
         <i class="fa-solid fa-trash-can"></i>
-      </div>
-    </div>`
+      </div>`
+    parentHtmlElement.appendChild(imageWrapperHtmlElement)
+
+    const trashIconContainerHtmlElement = findAllHtmlElementsByCssClass(
+      'trash-icon-container',
+      imageWrapperHtmlElement
+    )[0]
+    trashIconContainerHtmlElement.addEventListener('click', async () => {
+      await removeWorkById(work.id)
+    })
+  }
+}
+
+/**
+ * @param {number} workId - work id in database
+ */
+async function removeWorkById(workId) {
+  const bearerToken = getCookieValue('token')
+  const isWorkDeleted = await deleteWork(workId, bearerToken)
+  if (isWorkDeleted) {
+    const workHtmlElements = document.querySelectorAll(`[data-id="${workId}"]`)
+    workHtmlElements.forEach((workHtmlElement) => workHtmlElement.remove())
   }
 }
