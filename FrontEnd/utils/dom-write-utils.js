@@ -207,7 +207,8 @@ function displayWorksInsideProjectManagementDialog(
     imageWrapperHtmlElement.dataset.id = work.id.toString()
     imageWrapperHtmlElement.innerHTML = `<img src=${work.imageUrl} alt=${work.title}>
       <div class="trash-icon-container">
-        <i class="fa-solid fa-trash-can"></i>
+        <i aria-hidden="true" class="fa-solid fa-trash-can" title="Supprimer le projet"></i>
+        <span class="sr-only">Supprimer le projet</span>
       </div>`
     parentHtmlElement.appendChild(imageWrapperHtmlElement)
 
