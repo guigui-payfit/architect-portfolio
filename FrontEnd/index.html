@@ -73,7 +73,7 @@
 					<div class="dialog-back-arrow-and-cross-container">
 						<div> <!-- Wrapper to ensure the display of the cross icon always at the top right of the dialog -->
 							<div class="dialog-back-arrow-container">
-								<i aria-hidden="true" class="dialog-back-arrow fa-solid fa-arrow-left"
+								<i aria-hidden="true" class="dialog-back-arrow fa-arrow-left fa-solid"
 									title="Revenir à l'étape précédente"></i>
 								<span class="sr-only">Revenir à l'étape précédente</span>
 							</div>
@@ -92,6 +92,26 @@
 					</div>
 					<div id="project-management-dialog-step-2">
 						<h3 class="dialog-title" id="dialog-step-2-title">Ajout photo</h3>
+						<form>
+							<div id="file-input-container">
+								<i aria-hidden="true" class="fa-image fa-regular"></i>
+								<label for="file-input">+ Ajouter photo</label>
+								<input class="hidden" id="file-input" name="file-input" required type="file">
+								<p>jpg, png : 4mo max</p>
+							</div>
+							<label for="project-title">Titre</label>
+							<input id="project-title" name="project-title" required type="text">
+							<label for="project-category">Catégorie</label>
+							<div class="category-select-container">
+								<select id="project-category" name="project-category" required>
+									<option value="category1">Catégorie 1</option>
+									<option value="category2">Catégorie 2</option>
+								</select>
+								<i aria-hidden="true" class="fa-chevron-down fa-solid"></i>
+							</div>
+							<hr>
+							<button class="primary-button" disabled>Valider</button>
+						</form>
 					</div>
 				</div>
 			</aside>

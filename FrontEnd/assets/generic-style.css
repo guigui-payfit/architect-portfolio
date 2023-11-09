@@ -56,3 +56,9 @@
   margin: 3em auto 2em auto;
   min-width: 179px;
 }
+
+.primary-button:disabled {
+  background-color: #a7a7a7;
+  color: white;
+  cursor: not-allowed;
+}
