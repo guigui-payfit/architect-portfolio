@@ -67,16 +67,32 @@
 				<a class="hidden logged-in-only" href="#project-management-dialog" id="project-management-dialog-link"><i
 						class="fa-regular fa-pen-to-square"></i>modifier</a>
 			</div>
-			<aside aria-hidden="true" aria-labelledby="dialog-title" class="dialog hidden" id="project-management-dialog"
-				role="dialog">
+			<aside aria-hidden="true" aria-labelledby="dialog-step-1-title" class="dialog hidden"
+				id="project-management-dialog" role="dialog">
 				<div class="dialog-wrapper" id="project-management-dialog-wrapper">
-					<div id="cross-container">
-						<i class="dialog-closing-cross fa-solid fa-xmark"></i>
+					<div class="dialog-back-arrow-and-cross-container">
+						<div> <!-- Wrapper to ensure the display of the cross icon always at the top right of the dialog -->
+							<div class="dialog-back-arrow-container">
+								<i aria-hidden="true" class="dialog-back-arrow fa-solid fa-arrow-left"
+									title="Revenir à l'étape précédente"></i>
+								<span class="sr-only">Revenir à l'étape précédente</span>
+							</div>
+						</div>
+						<div class="dialog-cross-container">
+							<i aria-hidden="true" class="dialog-closing-cross fa-solid fa-xmark"
+								title="Fermer la fenêtre de dialogue"></i>
+							<span class="sr-only">Fermer la fenêtre de dialogue</span>
+						</div>
 					</div>
-					<h3 id="dialog-title">Galerie photo</h3>
-					<div id="project-management-dialog-gallery"></div>
-					<hr>
-					<button class="primary-button">Ajouter une photo</button>
+					<div id="project-management-dialog-step-1">
+						<h3 class="dialog-title" id="dialog-step-1-title">Galerie photo</h3>
+						<div id="project-management-dialog-gallery"></div>
+						<hr>
+						<button class="primary-button" id="from-step-1-to-step-2-button">Ajouter une photo</button>
+					</div>
+					<div id="project-management-dialog-step-2">
+						<h3 class="dialog-title" id="dialog-step-2-title">Ajout photo</h3>
+					</div>
 				</div>
 			</aside>
 			<ul id="category-filters">

@@ -67,21 +67,12 @@ export function enableAdminFeatures() {
  * This method opens the project management dialog.
  */
 export async function openProjectManagementDialog() {
-  const allWorks = await getAllWorks()
   const projectManagementDialogHtmlElement = findHtmlElementById(
     'project-management-dialog'
   )
   projectManagementDialogHtmlElement.classList.remove('hidden')
   projectManagementDialogHtmlElement.removeAttribute('aria-hidden')
   projectManagementDialogHtmlElement.setAttribute('aria-modal', 'true')
-
-  const projectManagementDialogGalleryHtmlElement = findHtmlElementById(
-    'project-management-dialog-gallery'
-  )
-  displayWorksInsideProjectManagementDialog(
-    allWorks,
-    projectManagementDialogGalleryHtmlElement
-  )
 
   projectManagementDialogHtmlElement.addEventListener(
     'click',
@@ -96,15 +87,27 @@ export async function openProjectManagementDialog() {
       event.stopPropagation()
     }
   )
-  const projectManagementDialogClosingCrossHtmlElement =
+  const projectManagementDialogClosingCrossContainerHtmlElement =
     findAllHtmlElementsByCssClass(
       'dialog-closing-cross',
       projectManagementDialogWrapperHtmlElement
     )[0]
-  projectManagementDialogClosingCrossHtmlElement.addEventListener(
+  projectManagementDialogClosingCrossContainerHtmlElement.addEventListener(
     'click',
     closeProjectManagementDialog
   )
+
+  const projectManagementDialogBackArrowContainerHtmlElement =
+    findAllHtmlElementsByCssClass(
+      'dialog-back-arrow',
+      projectManagementDialogWrapperHtmlElement
+    )[0]
+  projectManagementDialogBackArrowContainerHtmlElement.addEventListener(
+    'click',
+    () => displayProjectManagmentDialogStepContent(1)
+  )
+
+  await displayProjectManagmentDialogStepContent(1)
 }
 
 /**
@@ -132,6 +135,61 @@ function closeProjectManagementDialog() {
   projectManagementDialog.classList.add('hidden')
   projectManagementDialog.setAttribute('aria-hidden', 'true')
   projectManagementDialog.removeAttribute('aria-modal')
+}
+
+/**
+ * @param {1 | 2} step - step for which the content have to be displayed
+ * (step 1 : remove photo from gallery ; step 2 : add photo in gallery)
+ */
+async function displayProjectManagmentDialogStepContent(step) {
+  const stepToDisplayContainerHtmlElement = findHtmlElementById(
+    `project-management-dialog-step-${step}`
+  )
+  stepToDisplayContainerHtmlElement.classList.remove('hidden')
+
+  const stepNotToDisplay = step === 1 ? 2 : 1
+  const stepNotToDisplayContainerHtmlElement = findHtmlElementById(
+    `project-management-dialog-step-${stepNotToDisplay}`
+  )
+  stepNotToDisplayContainerHtmlElement.classList.add('hidden')
+
+  const projectManagementDialogHtmlElement = findHtmlElementById(
+    'project-management-dialog'
+  )
+  projectManagementDialogHtmlElement.setAttribute(
+    'aria-labelledby',
+    `project-management-dialog-step-${step}`
+  )
+
+  const projectManagementDialogBackArrowContainerHtmlElement =
+    findAllHtmlElementsByCssClass(
+      'dialog-back-arrow-container',
+      projectManagementDialogHtmlElement
+    )[0]
+
+  if (step === 1) {
+    projectManagementDialogBackArrowContainerHtmlElement.classList.add('hidden')
+
+    const allWorks = await getAllWorks()
+    const projectManagementDialogGalleryHtmlElement = findHtmlElementById(
+      'project-management-dialog-gallery'
+    )
+    displayWorksInsideProjectManagementDialog(
+      allWorks,
+      projectManagementDialogGalleryHtmlElement
+    )
+
+    const fromStep1ToStep2HtmlButtonElement = findHtmlElementById(
+      'from-step-1-to-step-2-button'
+    )
+    fromStep1ToStep2HtmlButtonElement.addEventListener('click', () =>
+      displayProjectManagmentDialogStepContent(2)
+    )
+  } else {
+    projectManagementDialogBackArrowContainerHtmlElement.classList.remove(
+      'hidden'
+    )
+  }
 }
 
 /**
