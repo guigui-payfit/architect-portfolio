@@ -124,7 +124,7 @@ li:hover {
 
 main {
   margin: auto;
-  max-width: 978px;
+  width: 978px;
 }
 
 nav li {
