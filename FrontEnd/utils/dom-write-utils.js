@@ -8,14 +8,10 @@ import { findAllHtmlElementsByCssClass } from './dom-read-utils.js'
 export function disableAdminFeatures() {
   const loggedInOnlyHtmlElements =
     findAllHtmlElementsByCssClass('logged-in-only')
-  loggedInOnlyHtmlElements.forEach((htmlElement) =>
-    htmlElement.classList.add('hidden')
-  )
+  loggedInOnlyHtmlElements.forEach((htmlElement) => hide(htmlElement))
   const loggedOutOnlyHtmlElements =
     findAllHtmlElementsByCssClass('logged-out-only')
-  loggedOutOnlyHtmlElements.forEach((htmlElement) =>
-    htmlElement.classList.remove('hidden')
-  )
+  loggedOutOnlyHtmlElements.forEach((htmlElement) => show(htmlElement))
 }
 
 /**
@@ -48,14 +44,18 @@ export function displayWorksByCategoryId(
 export function enableAdminFeatures() {
   const loggedInOnlyHtmlElements =
     findAllHtmlElementsByCssClass('logged-in-only')
-  loggedInOnlyHtmlElements.forEach((htmlElement) =>
-    htmlElement.classList.remove('hidden')
-  )
+  loggedInOnlyHtmlElements.forEach((htmlElement) => show(htmlElement))
   const loggedOutOnlyHtmlElements =
     findAllHtmlElementsByCssClass('logged-out-only')
-  loggedOutOnlyHtmlElements.forEach((htmlElement) =>
-    htmlElement.classList.add('hidden')
-  )
+  loggedOutOnlyHtmlElements.forEach((htmlElement) => hide(htmlElement))
+}
+
+/**
+ * @param {HTMLElement} htmlElement - HTML element to be hidden from users (screen readers included)
+ */
+export function hide(htmlElement) {
+  htmlElement.classList.add('hidden')
+  htmlElement.setAttribute('aria-hidden', 'true')
 }
 
 /**
@@ -71,4 +71,12 @@ export function setFilterAsActive(filterHtmlElement, allFilterHtmlElements) {
   }
 
   filterHtmlElement.classList.toggle('active')
+}
+
+/**
+ * @param {HTMLElement} htmlElement - HTML element to be shown to users
+ */
+export function show(htmlElement) {
+  htmlElement.classList.remove('hidden')
+  htmlElement.setAttribute('aria-hidden', 'false')
 }

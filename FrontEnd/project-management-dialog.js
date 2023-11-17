@@ -6,6 +6,7 @@ import {
   findAllHtmlElementsByCssClass,
   findHtmlElementById,
 } from './utils/dom-read-utils.js'
+import { hide, show } from './utils/dom-write-utils.js'
 
 /**
  * This methods adds event listeners on some HTML elements of the project management dialog
@@ -56,9 +57,8 @@ export function initializeProjectManagementDialog() {
  */
 export async function openProjectManagementDialog() {
   const dialogHtmlElement = findHtmlElementById('project-management-dialog')
-  dialogHtmlElement.classList.remove('hidden')
-  dialogHtmlElement.removeAttribute('aria-hidden')
-  dialogHtmlElement.setAttribute('aria-modal', 'true')
+  show(dialogHtmlElement)
+  dialogHtmlElement.ariaModal = true
 
   await displayDialogStepContent(1)
 }
@@ -68,9 +68,8 @@ export async function openProjectManagementDialog() {
  */
 function closeProjectManagementDialog() {
   const dialogHtmlElement = findHtmlElementById('project-management-dialog')
-  dialogHtmlElement.classList.add('hidden')
-  dialogHtmlElement.setAttribute('aria-hidden', 'true')
-  dialogHtmlElement.removeAttribute('aria-modal')
+  hide(dialogHtmlElement)
+  dialogHtmlElement.ariaModal = false
 
   resetDialogForm()
 }
@@ -98,13 +97,13 @@ async function displayDialogStepContent(step) {
   const stepToDisplayContainerHtmlElement = findHtmlElementById(
     `project-management-dialog-step-${step}`
   )
-  stepToDisplayContainerHtmlElement.classList.remove('hidden')
+  show(stepToDisplayContainerHtmlElement)
 
   const stepNotToDisplay = step === 1 ? 2 : 1
   const stepNotToDisplayContainerHtmlElement = findHtmlElementById(
     `project-management-dialog-step-${stepNotToDisplay}`
   )
-  stepNotToDisplayContainerHtmlElement.classList.add('hidden')
+  hide(stepNotToDisplayContainerHtmlElement)
 
   const dialogHtmlElement = findHtmlElementById('project-management-dialog')
   dialogHtmlElement.setAttribute(
@@ -118,7 +117,7 @@ async function displayDialogStepContent(step) {
   )[0]
 
   if (step === 1) {
-    dialogBackArrowContainerHtmlElement.classList.add('hidden')
+    hide(dialogBackArrowContainerHtmlElement)
 
     const allWorks = await getAllWorks()
     const dialogGalleryHtmlElement = findHtmlElementById(
@@ -126,7 +125,7 @@ async function displayDialogStepContent(step) {
     )
     displayWorksInsideDialog(allWorks, dialogGalleryHtmlElement)
   } else {
-    dialogBackArrowContainerHtmlElement.classList.remove('hidden')
+    show(dialogBackArrowContainerHtmlElement)
 
     displayCategoriesInDialog()
   }
@@ -207,11 +206,9 @@ function handleDialogFormSubmission() {
   )
 
   if (isUploadedFileValid || uploadedFile === undefined) {
-    fileUploadErrorMessageHtmlElement.classList.add('hidden')
-    fileUploadErrorMessageHtmlElement.ariaHidden = true
+    hide(fileUploadErrorMessageHtmlElement)
   } else {
-    fileUploadErrorMessageHtmlElement.classList.remove('hidden')
-    fileUploadErrorMessageHtmlElement.ariaHidden = false
+    show(fileUploadErrorMessageHtmlElement)
   }
 }
 
@@ -260,8 +257,7 @@ function resetDialogForm() {
   const fileUploadErrorMessageHtmlElement = findHtmlElementById(
     'file-upload-error-message'
   )
-  fileUploadErrorMessageHtmlElement.classList.add('hidden')
-  fileUploadErrorMessageHtmlElement.ariaHidden = true
+  hide(fileUploadErrorMessageHtmlElement)
 }
 
 /**
