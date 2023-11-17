@@ -1,4 +1,5 @@
-import { deleteWork, getAllWorks } from '../api/fetch.js'
+import { deleteWork, getAllCategories, getAllWorks } from '../api/fetch.js'
+import { Category } from '../models/category.js'
 import { Work } from '../models/work.js'
 import { getCookieValue } from './cookie.js'
 import {
@@ -104,10 +105,10 @@ export async function openProjectManagementDialog() {
     )[0]
   projectManagementDialogBackArrowContainerHtmlElement.addEventListener(
     'click',
-    () => displayProjectManagmentDialogStepContent(1)
+    () => displayProjectManagementDialogStepContent(1)
   )
 
-  await displayProjectManagmentDialogStepContent(1)
+  await displayProjectManagementDialogStepContent(1)
 }
 
 /**
@@ -138,10 +139,24 @@ function closeProjectManagementDialog() {
 }
 
 /**
+ * This function displays categories in the "select" component of the project management dialog.
+ */
+async function displayCategoriesInProjectManagementDialog() {
+  const categorySelectHtmlElement = findHtmlElementById('project-category')
+  /**
+   * @type {Category[]}
+   */
+  const categories = await getAllCategories()
+  for (let category of categories) {
+    categorySelectHtmlElement.innerHTML += `<option value=${category.id}">${category.name}</option>`
+  }
+}
+
+/**
  * @param {1 | 2} step - step for which the content have to be displayed
  * (step 1 : remove photo from gallery ; step 2 : add photo in gallery)
  */
-async function displayProjectManagmentDialogStepContent(step) {
+async function displayProjectManagementDialogStepContent(step) {
   const stepToDisplayContainerHtmlElement = findHtmlElementById(
     `project-management-dialog-step-${step}`
   )
@@ -183,12 +198,14 @@ async function displayProjectManagmentDialogStepContent(step) {
       'from-step-1-to-step-2-button'
     )
     fromStep1ToStep2HtmlButtonElement.addEventListener('click', () =>
-      displayProjectManagmentDialogStepContent(2)
+      displayProjectManagementDialogStepContent(2)
     )
   } else {
     projectManagementDialogBackArrowContainerHtmlElement.classList.remove(
       'hidden'
     )
+
+    displayCategoriesInProjectManagementDialog()
   }
 }
 
