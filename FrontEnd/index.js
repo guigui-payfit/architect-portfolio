@@ -1,6 +1,7 @@
 import { isAuthenticated, logout } from './auth/auth.js'
 import { getAllWorks } from './api/fetch.js'
 import { Work } from './models/work.js'
+import { openProjectManagementDialog } from './project-management-dialog.js'
 import { getCookieValue } from './utils/cookie.js'
 import {
   findAllHtmlElementsByCssClass,
@@ -9,7 +10,6 @@ import {
 import {
   displayWorksByCategoryId,
   enableAdminFeatures,
-  openProjectManagementDialog,
   setFilterAsActive,
 } from './utils/dom-write-utils.js'
 
