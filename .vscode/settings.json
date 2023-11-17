@@ -5,6 +5,9 @@
   },
   "liveServer.settings.ignoreFiles": [
     ".vscode/**",
+    "**/*.jpeg",
+    "**/*.jpg",
+    "**/*.png",
     "**/*.sass",
     "**/*.scss",
     "**/*.sqlite",

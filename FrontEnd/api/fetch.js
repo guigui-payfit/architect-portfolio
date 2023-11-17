@@ -60,3 +60,26 @@ export async function postLoginInformation(email, password) {
   }
   return await httpResponse.json()
 }
+
+/**
+ * @param {File} file - uploaded image by the user
+ * @param {string} title - title of the project (work)
+ * @param {string} category - work category
+ * @param {string} bearerToken - bearer token found in the user cookie
+ * @returns {Promise<boolean>} if the creation operation has been successful or not
+ */
+export async function postWork(file, title, category, bearerToken) {
+  const formData = new FormData()
+  formData.append('category', category)
+  formData.append('image', file)
+  formData.append('title', title)
+
+  const httpResponse = await fetch(`${API_BASE_URL}/works`, {
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${bearerToken}`,
+    },
+    method: 'POST',
+  })
+  return httpResponse.ok
+}

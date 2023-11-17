@@ -100,11 +100,14 @@ select {
 
 #project-management-dialog-wrapper .image-wrapper {
   max-height: 103px;
+  max-width: 77px;
   position: relative;
 }
 
 #project-management-dialog-wrapper .image-wrapper img {
   height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 #project-management-dialog-wrapper .image-wrapper .trash-icon-container {

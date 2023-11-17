@@ -1,4 +1,9 @@
-import { deleteWork, getAllCategories, getAllWorks } from './api/fetch.js'
+import {
+  deleteWork,
+  getAllCategories,
+  getAllWorks,
+  postWork,
+} from './api/fetch.js'
 import { Category } from './models/category.js'
 import { Work } from './models/work.js'
 import { getCookieValue } from './utils/cookie.js'
@@ -49,7 +54,10 @@ export function initializeProjectManagementDialog() {
   const dialogFormHtmlElement = findHtmlElementById(
     'project-management-dialog-form'
   )
-  dialogFormHtmlElement.addEventListener('input', handleDialogFormSubmission)
+  dialogFormHtmlElement.addEventListener(
+    'input',
+    handleDialogFormSubmissionState
+  )
 
   const fileInputHtmlElement = findHtmlElementById('file-input')
   const uploadedImageHtmlElement = findHtmlElementById('uploaded-image')
@@ -63,6 +71,13 @@ export function initializeProjectManagementDialog() {
       fileInputContainerHtmlElement
     )
   )
+
+  const formSubmissionButtonHtmlElement = findHtmlElementById(
+    'project-management-dialog-form-submission-button'
+  )
+  formSubmissionButtonHtmlElement.addEventListener('click', (event) => {
+    submitForm(event)
+  })
 }
 
 /**
@@ -98,7 +113,7 @@ async function displayCategoriesInDialog() {
    */
   const categories = await getAllCategories()
   for (let category of categories) {
-    categorySelectHtmlElement.innerHTML += `<option value=${category.id}">${category.name}</option>`
+    categorySelectHtmlElement.innerHTML += `<option value=${category.id}>${category.name}</option>`
   }
 }
 
@@ -200,7 +215,7 @@ function displayWorksInsideDialog(allWorks, parentHtmlElement) {
  * This function enables the form submission in the project management dialog when all required fields have been filled with valid data.
  * On the contrary, it displays an error message when the uploaded file is invalid.
  */
-function handleDialogFormSubmission() {
+function handleDialogFormSubmissionState() {
   /**
    * @type {HTMLInputElement}
    */
@@ -303,6 +318,39 @@ function resetDialogForm() {
     'project-management-dialog-form-submission-button'
   )
   formSubmissionButtonHtmlElement.disabled = true
+}
+
+/**
+ * This function posts a work to the server.
+ * @param {Event} event - click event from the user
+ */
+async function submitForm(event) {
+  // Prevent the default page refresh when submitting a form
+  event.preventDefault()
+
+  /**
+   * @type {HTMLInputElement}
+   */
+  const fileInputHtmlElement = findHtmlElementById('file-input')
+  const uploadedFile = fileInputHtmlElement.files[0]
+
+  /**
+   * @type {HTMLInputElement}
+   */
+  const projectTitleInputHtmlElement = findHtmlElementById('project-title')
+  const projectTitle = projectTitleInputHtmlElement.value
+
+  /**
+   * @type {HTMLSelectElement}
+   */
+  const categorySelectHtmlElement = findHtmlElementById('project-category')
+  const category = categorySelectHtmlElement.value
+
+  const bearerToken = getCookieValue('token')
+
+  await postWork(uploadedFile, projectTitle, category, bearerToken)
+
+  closeProjectManagementDialog()
 }
 
 /**
