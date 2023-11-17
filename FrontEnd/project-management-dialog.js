@@ -8,21 +8,19 @@ import {
 } from './utils/dom-read-utils.js'
 
 /**
- * This method opens the project management dialog.
+ * This methods adds event listeners on some HTML elements of the project management dialog
  */
-export async function openProjectManagementDialog() {
+export function initializeProjectManagementDialog() {
   const dialogHtmlElement = findHtmlElementById('project-management-dialog')
-  dialogHtmlElement.classList.remove('hidden')
-  dialogHtmlElement.removeAttribute('aria-hidden')
-  dialogHtmlElement.setAttribute('aria-modal', 'true')
-
   dialogHtmlElement.addEventListener('click', closeProjectManagementDialog)
+
   const dialogWrapperHtmlElement = findHtmlElementById(
     'project-management-dialog-wrapper'
   )
   dialogWrapperHtmlElement.addEventListener('click', (event) => {
     event.stopPropagation()
   })
+
   const dialogClosingCrossContainerHtmlElement = findAllHtmlElementsByCssClass(
     'dialog-closing-cross',
     dialogWrapperHtmlElement
@@ -40,7 +38,12 @@ export async function openProjectManagementDialog() {
     displayDialogStepContent(1)
   )
 
-  await displayDialogStepContent(1)
+  const fromStep1ToStep2HtmlButtonElement = findHtmlElementById(
+    'from-step-1-to-step-2-button'
+  )
+  fromStep1ToStep2HtmlButtonElement.addEventListener('click', () =>
+    displayDialogStepContent(2)
+  )
 
   const dialogFormHtmlElement = findHtmlElementById(
     'project-management-dialog-form'
@@ -49,15 +52,25 @@ export async function openProjectManagementDialog() {
 }
 
 /**
+ * This method opens the project management dialog.
+ */
+export async function openProjectManagementDialog() {
+  const dialogHtmlElement = findHtmlElementById('project-management-dialog')
+  dialogHtmlElement.classList.remove('hidden')
+  dialogHtmlElement.removeAttribute('aria-hidden')
+  dialogHtmlElement.setAttribute('aria-modal', 'true')
+
+  await displayDialogStepContent(1)
+}
+
+/**
  * This method closes the project management dialog.
  */
 function closeProjectManagementDialog() {
-  const projectManagementDialog = findHtmlElementById(
-    'project-management-dialog'
-  )
-  projectManagementDialog.classList.add('hidden')
-  projectManagementDialog.setAttribute('aria-hidden', 'true')
-  projectManagementDialog.removeAttribute('aria-modal')
+  const dialogHtmlElement = findHtmlElementById('project-management-dialog')
+  dialogHtmlElement.classList.add('hidden')
+  dialogHtmlElement.setAttribute('aria-hidden', 'true')
+  dialogHtmlElement.removeAttribute('aria-modal')
 
   resetDialogForm()
 }
@@ -67,6 +80,7 @@ function closeProjectManagementDialog() {
  */
 async function displayCategoriesInDialog() {
   const categorySelectHtmlElement = findHtmlElementById('project-category')
+  categorySelectHtmlElement.innerHTML = ''
   /**
    * @type {Category[]}
    */
@@ -111,13 +125,6 @@ async function displayDialogStepContent(step) {
       'project-management-dialog-gallery'
     )
     displayWorksInsideDialog(allWorks, dialogGalleryHtmlElement)
-
-    const fromStep1ToStep2HtmlButtonElement = findHtmlElementById(
-      'from-step-1-to-step-2-button'
-    )
-    fromStep1ToStep2HtmlButtonElement.addEventListener('click', () =>
-      displayDialogStepContent(2)
-    )
   } else {
     dialogBackArrowContainerHtmlElement.classList.remove('hidden')
 

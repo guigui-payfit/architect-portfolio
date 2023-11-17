@@ -1,7 +1,10 @@
 import { isAuthenticated, logout } from './auth/auth.js'
 import { getAllWorks } from './api/fetch.js'
 import { Work } from './models/work.js'
-import { openProjectManagementDialog } from './project-management-dialog.js'
+import {
+  initializeProjectManagementDialog,
+  openProjectManagementDialog,
+} from './project-management-dialog.js'
 import { getCookieValue } from './utils/cookie.js'
 import {
   findAllHtmlElementsByCssClass,
@@ -72,6 +75,9 @@ allFilterHtmlElements.forEach((filterHtmlElement) =>
     setFilterAsActive(filterHtmlElement, allFilterHtmlElements)
   })
 )
+
+// Add event listeners on some HTML elements of the project management dialog
+initializeProjectManagementDialog()
 
 // Click on the "All" category filter
 const allFilterHtmlElement = findHtmlElementById('default-category-filter')
