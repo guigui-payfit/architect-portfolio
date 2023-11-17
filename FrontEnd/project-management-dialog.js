@@ -50,6 +50,19 @@ export function initializeProjectManagementDialog() {
     'project-management-dialog-form'
   )
   dialogFormHtmlElement.addEventListener('input', handleDialogFormSubmission)
+
+  const fileInputHtmlElement = findHtmlElementById('file-input')
+  const uploadedImageHtmlElement = findHtmlElementById('uploaded-image')
+  const fileInputContainerHtmlElement = findHtmlElementById(
+    'file-input-container'
+  )
+  fileInputHtmlElement.addEventListener('change', () =>
+    displayUploadedImage(
+      fileInputHtmlElement,
+      uploadedImageHtmlElement,
+      fileInputContainerHtmlElement
+    )
+  )
 }
 
 /**
@@ -129,6 +142,31 @@ async function displayDialogStepContent(step) {
 
     displayCategoriesInDialog()
   }
+}
+
+/**
+ * @param {HTMLInputElement} fileInputHtmlElement - input from which the file upload has been made by the user
+ * @param {HTMLImageElement} uploadedImageHtmlElement - HTML element representing the image uploaded by the user
+ * @param {HTMLDivElement} fileInputContainerHtmlElement - container HTML element wrapping the file input
+ */
+function displayUploadedImage(
+  fileInputHtmlElement,
+  uploadedImageHtmlElement,
+  fileInputContainerHtmlElement
+) {
+  const uploadedFile = fileInputHtmlElement.files[0]
+
+  if (!uploadedFileValid(uploadedFile)) {
+    return
+  }
+
+  const fileReader = new FileReader()
+  fileReader.onload = (event) => {
+    uploadedImageHtmlElement.setAttribute('src', event.target.result)
+    hide(fileInputContainerHtmlElement)
+    show(uploadedImageHtmlElement)
+  }
+  fileReader.readAsDataURL(uploadedFile)
 }
 
 /**
@@ -234,6 +272,18 @@ function resetDialogForm() {
   const fileInputHtmlElement = findHtmlElementById('file-input')
   fileInputHtmlElement.value = ''
 
+  const uploadedImageHtmlElement = findHtmlElementById('uploaded-image')
+  hide(uploadedImageHtmlElement)
+  const fileInputContainerHtmlElement = findHtmlElementById(
+    'file-input-container'
+  )
+  show(fileInputContainerHtmlElement)
+
+  const fileUploadErrorMessageHtmlElement = findHtmlElementById(
+    'file-upload-error-message'
+  )
+  hide(fileUploadErrorMessageHtmlElement)
+
   /**
    * @type {HTMLInputElement}
    */
@@ -253,11 +303,6 @@ function resetDialogForm() {
     'project-management-dialog-form-submission-button'
   )
   formSubmissionButtonHtmlElement.disabled = true
-
-  const fileUploadErrorMessageHtmlElement = findHtmlElementById(
-    'file-upload-error-message'
-  )
-  hide(fileUploadErrorMessageHtmlElement)
 }
 
 /**

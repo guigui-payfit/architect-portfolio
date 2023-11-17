@@ -24,13 +24,18 @@ select {
   margin-top: 15px;
 }
 
-#file-input-container {
-  align-items: center;
+#file-input-and-uploaded-image-container {
   background-color: #e8f1f6;
   border-radius: 3px;
+  height: 169px;
+}
+
+#file-input-container {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  height: 169px;
+  height: 100%;
+  width: 100%;
 }
 
 #file-input-container > label {
@@ -79,10 +84,6 @@ select {
   max-width: 420px;
 }
 
-#project-management-dialog-wrapper img {
-  max-height: 103px;
-}
-
 #project-management-dialog-wrapper .dialog-back-arrow-and-cross-container {
   display: flex;
   justify-content: space-between;
@@ -98,7 +99,12 @@ select {
 }
 
 #project-management-dialog-wrapper .image-wrapper {
+  max-height: 103px;
   position: relative;
+}
+
+#project-management-dialog-wrapper .image-wrapper img {
+  height: 100%;
 }
 
 #project-management-dialog-wrapper .image-wrapper .trash-icon-container {
@@ -128,4 +134,10 @@ select {
 
 #project-management-dialog-wrapper .primary-button {
   min-width: 237px;
+}
+
+#uploaded-image {
+  display: block;
+  height: 100%;
+  margin: auto;
 }

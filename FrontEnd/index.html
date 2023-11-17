@@ -93,12 +93,15 @@
 					<div id="project-management-dialog-step-2">
 						<h3 class="dialog-title" id="dialog-step-2-title">Ajout photo</h3>
 						<form id="project-management-dialog-form">
-							<div id="file-input-container">
-								<i aria-hidden="true" class="fa-image fa-regular"></i>
-								<label for="file-input">+ Ajouter photo</label>
-								<input accept="image/jpeg, image/png" class="hidden" id="file-input" name="file-input" required
-									type="file">
-								<p>jpg, png : 4mo max</p>
+							<div id="file-input-and-uploaded-image-container">
+								<div id="file-input-container">
+									<i aria-hidden="true" class="fa-image fa-regular"></i>
+									<label for="file-input">+ Ajouter photo</label>
+									<input accept="image/jpeg, image/png" class="hidden" id="file-input" name="file-input" required
+										type="file">
+									<p>jpg, png : 4mo max</p>
+								</div>
+								<img aria-hidden="true" class="hidden" id="uploaded-image">
 							</div>
 							<p aria-hidden="true" class="error hidden" id="file-upload-error-message">L'image ajoutée ne peut être
 								téléchargée. Veuillez ajouter une image de type .jpg ou .png ne dépassant pas une taille de 4Mo.</p>
