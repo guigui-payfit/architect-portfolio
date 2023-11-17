@@ -50,7 +50,12 @@ select {
 
 #file-input-container > p {
   color: #444444;
+  cursor: default;
   font-size: 10px;
+}
+
+#file-upload-error-message {
+  margin-top: 1em;
 }
 
 #project-management-dialog-gallery {

@@ -109,6 +109,14 @@ export async function openProjectManagementDialog() {
   )
 
   await displayProjectManagementDialogStepContent(1)
+
+  const projectManagementDialogFormHtmlElement = findHtmlElementById(
+    'project-management-dialog-form'
+  )
+  projectManagementDialogFormHtmlElement.addEventListener(
+    'input',
+    handleProjectManagementDialogFormSubmission
+  )
 }
 
 /**
@@ -242,6 +250,62 @@ function displayWorksInsideProjectManagementDialog(
 }
 
 /**
+ * This function enables the form submission in the project management dialog when all required fields have been filled with valid data.
+ * On the contrary, it displays an error message when the uploaded file is invalid.
+ */
+function handleProjectManagementDialogFormSubmission() {
+  /**
+   * @type {HTMLInputElement}
+   */
+  const fileInputHtmlElement = findHtmlElementById('file-input')
+  const uploadedFile = fileInputHtmlElement.files[0]
+  if (uploadedFile === undefined) {
+    return
+  }
+
+  /**
+   * @type {HTMLInputElement}
+   */
+  const projectTitleInputHtmlElement = findHtmlElementById('project-title')
+
+  /**
+   * @type {HTMLSelectElement}
+   */
+  const categorySelectHtmlElement = findHtmlElementById('project-category')
+
+  /**
+   * @type {HTMLButtonElement}
+   */
+  const formSubmissionButtonHtmlElement = findHtmlElementById(
+    'project-management-dialog-form-submission-button'
+  )
+
+  const isUploadedFileValid = uploadedFileValid(uploadedFile)
+
+  if (
+    isUploadedFileValid &&
+    projectTitleInputHtmlElement.value &&
+    categorySelectHtmlElement.value
+  ) {
+    formSubmissionButtonHtmlElement.disabled = false
+  } else {
+    formSubmissionButtonHtmlElement.disabled = true
+  }
+
+  const fileUploadErrorMessageHtmlElement = findHtmlElementById(
+    'file-upload-error-message'
+  )
+
+  if (isUploadedFileValid || uploadedFile === undefined) {
+    fileUploadErrorMessageHtmlElement.classList.add('hidden')
+    fileUploadErrorMessageHtmlElement.ariaHidden = true
+  } else {
+    fileUploadErrorMessageHtmlElement.classList.remove('hidden')
+    fileUploadErrorMessageHtmlElement.ariaHidden = false
+  }
+}
+
+/**
  * @param {number} workId - work id in database
  */
 async function removeWorkById(workId) {
@@ -281,5 +345,24 @@ function resetProjectManagementDialogForm() {
   const formSubmissionButtonHtmlElement = findHtmlElementById(
     'project-management-dialog-form-submission-button'
   )
-  formSubmissionButtonHtmlElement.setAttribute('disabled', 'true')
+  formSubmissionButtonHtmlElement.disabled = true
+
+  const fileUploadErrorMessageHtmlElement = findHtmlElementById(
+    'file-upload-error-message'
+  )
+  fileUploadErrorMessageHtmlElement.classList.add('hidden')
+  fileUploadErrorMessageHtmlElement.ariaHidden = true
+}
+
+/**
+ * @param {File} uploadedFile - file uploaded by the user from its device  in the project management dialog form
+ * @returns {boolean} true if the uploaded file is an image with a right format and a size less than 4Mo, else false
+ */
+function uploadedFileValid(uploadedFile) {
+  const ACCEPTED_MIME_TYPES = ['image/jpeg', 'image/png']
+  const MEGA_OCTET_EXPRESSED_IN_OCTETS = 1024 * 1024
+  return (
+    ACCEPTED_MIME_TYPES.includes(uploadedFile.type) &&
+    uploadedFile.size <= 4 * MEGA_OCTET_EXPRESSED_IN_OCTETS
+  )
 }
