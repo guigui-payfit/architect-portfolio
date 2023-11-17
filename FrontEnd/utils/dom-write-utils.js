@@ -136,6 +136,8 @@ function closeProjectManagementDialog() {
   projectManagementDialog.classList.add('hidden')
   projectManagementDialog.setAttribute('aria-hidden', 'true')
   projectManagementDialog.removeAttribute('aria-modal')
+
+  resetProjectManagementDialogForm()
 }
 
 /**
@@ -249,4 +251,35 @@ async function removeWorkById(workId) {
     const workHtmlElements = document.querySelectorAll(`[data-id="${workId}"]`)
     workHtmlElements.forEach((workHtmlElement) => workHtmlElement.remove())
   }
+}
+
+/**
+ * This function resets all inputs of the project management dialog form with default values.
+ */
+function resetProjectManagementDialogForm() {
+  /**
+   * @type {HTMLInputElement}
+   */
+  const fileInputHtmlElement = findHtmlElementById('file-input')
+  fileInputHtmlElement.value = ''
+
+  /**
+   * @type {HTMLInputElement}
+   */
+  const projectTitleInputHtmlElement = findHtmlElementById('project-title')
+  projectTitleInputHtmlElement.value = ''
+
+  /**
+   * @type {HTMLSelectElement}
+   */
+  const categorySelectHtmlElement = findHtmlElementById('project-category')
+  categorySelectHtmlElement.value = '1'
+
+  /**
+   * @type {HTMLButtonElement}
+   */
+  const formSubmissionButtonHtmlElement = findHtmlElementById(
+    'project-management-dialog-form-submission-button'
+  )
+  formSubmissionButtonHtmlElement.setAttribute('disabled', 'true')
 }
