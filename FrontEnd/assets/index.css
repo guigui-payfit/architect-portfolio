@@ -54,7 +54,7 @@
 }
 
 #gallery img {
-  height: 100%;
+  min-height: 435px;
   object-fit: cover;
   width: 100%;
 }

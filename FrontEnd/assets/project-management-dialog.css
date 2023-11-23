@@ -68,7 +68,9 @@ select {
   grid-gap: 1.5em 0.6em;
   grid-template-columns: repeat(5, 1fr);
   margin: 4em 0;
+  max-height: 400px;
   max-width: 420px;
+  overflow: scroll;
 }
 
 #project-management-dialog-link {
@@ -99,7 +101,7 @@ select {
 }
 
 #project-management-dialog-wrapper .image-wrapper {
-  max-height: 103px;
+  height: 103px;
   max-width: 77px;
   position: relative;
 }
