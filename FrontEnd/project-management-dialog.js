@@ -11,7 +11,7 @@ import {
   findAllHtmlElementsByCssClass,
   findHtmlElementById,
 } from './utils/dom-read-utils.js'
-import { hide, show } from './utils/dom-write-utils.js'
+import { displayNewWork, hide, show } from './utils/dom-write-utils.js'
 
 /**
  * This methods adds event listeners on some HTML elements of the project management dialog
@@ -193,7 +193,7 @@ function displayWorksInsideDialog(allWorks, parentHtmlElement) {
   for (let work of allWorks) {
     const imageWrapperHtmlElement = document.createElement('div')
     imageWrapperHtmlElement.classList.add('image-wrapper')
-    imageWrapperHtmlElement.dataset.id = work.id.toString()
+    imageWrapperHtmlElement.dataset.workId = work.id.toString()
     imageWrapperHtmlElement.innerHTML = `<img src=${work.imageUrl} alt=${work.title}>
       <div class="trash-icon-container">
         <i aria-hidden="true" class="fa-solid fa-trash-can" title="Supprimer le projet"></i>
@@ -272,7 +272,9 @@ async function removeWorkById(workId) {
   const bearerToken = getCookieValue('token')
   const isWorkDeleted = await deleteWork(workId, bearerToken)
   if (isWorkDeleted) {
-    const workHtmlElements = document.querySelectorAll(`[data-id="${workId}"]`)
+    const workHtmlElements = document.querySelectorAll(
+      `[data-work-id="${workId}"]`
+    )
     workHtmlElements.forEach((workHtmlElement) => workHtmlElement.remove())
   }
 }
@@ -348,7 +350,14 @@ async function submitForm(event) {
 
   const bearerToken = getCookieValue('token')
 
-  await postWork(uploadedFile, projectTitle, category, bearerToken)
+  const newWork = await postWork(
+    uploadedFile,
+    projectTitle,
+    category,
+    bearerToken
+  )
+  const galleryHtmlElement = findHtmlElementById('gallery')
+  displayNewWork(newWork, galleryHtmlElement)
 
   closeProjectManagementDialog()
 }

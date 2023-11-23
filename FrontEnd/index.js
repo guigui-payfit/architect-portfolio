@@ -57,7 +57,7 @@ if (bearerToken !== undefined && (await isAuthenticated(bearerToken))) {
     findHtmlElementById('category-filters')
   allCategories.forEach((category) => {
     const categoryHtmlElement = document.createElement('li')
-    categoryHtmlElement.innerHTML = `<button class="category-filter" data-id="${category.id}">${category.name}</button>`
+    categoryHtmlElement.innerHTML = `<button class="category-filter" data-category-id="${category.id}">${category.name}</button>`
     categoryFilterContainerHtmlElement.appendChild(categoryHtmlElement)
   })
 }
@@ -68,8 +68,8 @@ const allFilterHtmlElements = findAllHtmlElementsByCssClass('category-filter')
 allFilterHtmlElements.forEach((filterHtmlElement) =>
   filterHtmlElement.addEventListener('click', () => {
     const categoryId =
-      filterHtmlElement.dataset['id'] !== undefined
-        ? parseInt(filterHtmlElement.dataset['id'])
+      filterHtmlElement.dataset.categoryId !== undefined
+        ? parseInt(filterHtmlElement.dataset.categoryId)
         : undefined
     displayWorksByCategoryId(allWorks, categoryId, galleryHtmlElement)
     setFilterAsActive(filterHtmlElement, allFilterHtmlElements)

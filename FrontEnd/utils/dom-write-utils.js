@@ -15,6 +15,17 @@ export function disableAdminFeatures() {
 }
 
 /**
+ * @param {Work} work - new work to be displayed
+ * @param {HTMLElement} parentHtmlElement - HTML element in which to display the new work
+ */
+export function displayNewWork(work, parentHtmlElement) {
+  parentHtmlElement.innerHTML += `<figure data-work-id=${work.id}>
+					<img src=${work.imageUrl} alt=${work.title}>
+					<figcaption>${work.title}</figcaption>
+				</figure>`
+}
+
+/**
  * @param {Work[]} allWorks - all works fetched from the API
  * @param {number | undefined} categoryId - category id in database
  * @param {HTMLElement} parentHtmlElement - HTML element in which to display works
@@ -30,10 +41,7 @@ export function displayWorksByCategoryId(
       ? allWorks
       : allWorks.filter((work) => work.categoryId === categoryId)
   for (let work of worksToDisplay) {
-    parentHtmlElement.innerHTML += `<figure data-id=${work.id}>
-					<img src=${work.imageUrl} alt=${work.title}>
-					<figcaption>${work.title}</figcaption>
-				</figure>`
+    displayNewWork(work, parentHtmlElement)
   }
 }
 

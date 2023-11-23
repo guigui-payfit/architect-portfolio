@@ -66,7 +66,7 @@ export async function postLoginInformation(email, password) {
  * @param {string} title - title of the project (work)
  * @param {string} category - work category
  * @param {string} bearerToken - bearer token found in the user cookie
- * @returns {Promise<boolean>} if the creation operation has been successful or not
+ * @returns {Promise<Work>} the new work created
  */
 export async function postWork(file, title, category, bearerToken) {
   const formData = new FormData()
@@ -81,5 +81,5 @@ export async function postWork(file, title, category, bearerToken) {
     },
     method: 'POST',
   })
-  return httpResponse.ok
+  return await httpResponse.json()
 }

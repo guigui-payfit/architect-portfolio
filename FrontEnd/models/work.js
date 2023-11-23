@@ -2,7 +2,7 @@ import { Category } from './category.js'
 
 export class Work {
   /**
-   * @type {Category}
+   * @type {Category | undefined}
    */
   category
 
