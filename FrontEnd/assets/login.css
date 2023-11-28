@@ -27,8 +27,22 @@ p {
   align-items: center;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-#login-form input {
-  min-width: 379px;
+#login-form {
+  max-width: 379px;
+  width: 100%;
+}
+
+#login-form button {
+  max-width: 179px;
+}
+
+/* Styles on small (phones) and medium (tablets) devices */
+@media (max-width: 1140px) {
+  #login {
+    margin-top: 0;
+    padding: 0 1em;
+  }
 }

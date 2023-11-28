@@ -1,5 +1,10 @@
 form {
-  width: 420px;
+  margin: auto;
+  max-width: 420px;
+}
+
+form > * {
+  width: 100%;
 }
 
 select {
@@ -75,7 +80,17 @@ select {
 
 #project-management-dialog-link {
   margin-left: 25em;
+  min-width: 100px;
   position: absolute;
+  top: 68px;
+}
+
+#project-management-dialog-step-2 {
+  width: 100%;
+}
+
+#project-management-dialog-step-2 h3 {
+  margin-bottom: 35px;
 }
 
 #project-management-dialog-step-2 hr {
@@ -138,11 +153,32 @@ select {
 }
 
 #project-management-dialog-wrapper .primary-button {
-  min-width: 237px;
+  max-width: 237px;
+  width: 100%;
 }
 
 #uploaded-image {
   display: block;
   height: 100%;
   margin: auto;
+}
+
+/* Styles on small (phones) and medium (tablets) devices */
+@media (max-width: 1140px) {
+  #project-management-dialog-link {
+    top: 38px;
+  }
+}
+
+/* Styles on small devices (phones) */
+@media (max-width: 768px) {
+  #project-management-dialog-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #project-management-dialog-link {
+    margin-left: 0;
+    margin-top: 1em;
+    position: initial;
+  }
 }

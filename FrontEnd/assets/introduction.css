@@ -1,6 +1,7 @@
 #introduction {
   align-items: center;
   display: flex;
+  width: 100%;
 }
 
 #introduction article {
@@ -10,6 +11,7 @@
 
 #introduction figure {
   flex: 1;
+  margin-right: 92px;
 }
 
 #introduction h2 {
@@ -18,10 +20,27 @@
 
 #introduction img {
   display: block;
-  width: 474px;
+  max-width: 474px;
+  width: 100%;
 }
 
 #introduction p {
   line-height: 16.4px;
   margin-bottom: 0.5em;
+}
+
+/* Styles on small (phones) and medium (tablets) devices */
+@media (max-width: 1140px) {
+  #introduction {
+    flex-direction: column-reverse;
+    margin-top: 0;
+  }
+
+  #introduction figure {
+    margin: 0 1em;
+  }
+
+  #introduction article {
+    margin: 0 1em 2em 1em;
+  }
 }

@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 *:hover {
   transition: var(--transition);
 }
@@ -46,7 +50,8 @@ footer {
   font-weight: 300;
   height: 60px;
   justify-content: flex-end;
-  min-width: 1440px;
+  margin-top: 1em;
+  width: 100%;
 }
 
 footer nav ul {
@@ -89,7 +94,8 @@ header {
   display: flex;
   justify-content: space-between;
   margin: 50px 0;
-  width: 1140px;
+  max-width: 1140px;
+  width: 100%;
 }
 
 header li a {
@@ -109,7 +115,7 @@ select {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   font-size: 1.2em;
-  height: 50px;
+  height: 51px;
   padding: 0 0.5em;
 }
 
@@ -123,8 +129,11 @@ li:hover {
 }
 
 main {
-  margin: auto;
-  width: 978px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 978px;
+  width: 100%;
 }
 
 nav li {
@@ -155,4 +164,20 @@ textarea {
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   padding: 0.5em;
+}
+
+/* Styles on small (phones) and medium (tablets) devices */
+@media (max-width: 1140px) {
+  a {
+    display: flex;
+    justify-content: center;
+  }
+
+  header {
+    flex-direction: column;
+  }
+
+  header > *:not(:last-child) {
+    margin-bottom: 1em;
+  }
 }
