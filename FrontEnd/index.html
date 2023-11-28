@@ -16,7 +16,7 @@
 		crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/index.css">
-	<script defer src="index.js" type="module"></script>
+	<script src="index.js" type="module"></script>
 </head>
 
 <body>
@@ -39,7 +39,7 @@
 		</nav>
 	</header>
 	<main>
-		<section id="introduction">
+		<section aria-label="presentation" id="introduction">
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">
 			</figure>
@@ -62,14 +62,14 @@
 				</p>
 			</article>
 		</section>
-		<section id="portfolio">
+		<section aria-label="portfolio" id="portfolio">
 			<div id="portfolio-title">
 				<h2>Mes Projets</h2>
 				<a aria-hidden="true" class="hidden logged-in-only" href="#project-management-dialog"
 					id="project-management-dialog-link"><i class="fa-regular fa-pen-to-square"></i>modifier</a>
 			</div>
-			<aside aria-hidden="true" aria-labelledby="dialog-step-1-title" class="dialog hidden"
-				id="project-management-dialog" role="dialog">
+			<div aria-hidden="true" aria-labelledby="dialog-step-1-title" class="dialog hidden" id="project-management-dialog"
+				role="dialog">
 				<div class="dialog-wrapper" id="project-management-dialog-wrapper">
 					<div class="dialog-back-arrow-and-cross-container">
 						<div> <!-- Wrapper to ensure the display of the cross icon always at the top right of the dialog -->
@@ -102,7 +102,7 @@
 										type="file">
 									<p>jpg, png : 4mo max</p>
 								</div>
-								<img aria-hidden="true" class="hidden" id="uploaded-image">
+								<img alt="" aria-hidden="true" class="hidden" id="uploaded-image" src="#">
 							</div>
 							<p aria-hidden="true" class="error hidden" id="file-upload-error-message">L'image ajoutée ne peut être
 								téléchargée. Veuillez ajouter une image de type .jpg ou .png ne dépassant pas une taille de 4Mo.</p>
@@ -110,7 +110,7 @@
 							<input id="project-title" name="project-title" required type="text">
 							<label for="project-category">Catégorie</label>
 							<div class="category-select-container">
-								<select id="project-category" name="project-category" required>
+								<select id="project-category" name="project-category">
 								</select>
 								<i aria-hidden="true" class="fa-chevron-down fa-solid"></i>
 							</div>
@@ -120,13 +120,13 @@
 						</form>
 					</div>
 				</div>
-			</aside>
+			</div>
 			<ul id="category-filters">
 				<li><button class="category-filter logged-out-only" id="default-category-filter">Tous</button></li>
 			</ul>
 			<div id="gallery"></div>
 		</section>
-		<section id="contact">
+		<section aria-label="contact" id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
 			<form action="#" method="post">
