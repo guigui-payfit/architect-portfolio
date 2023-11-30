@@ -15,9 +15,10 @@ import {
   enableAdminFeatures,
   setFilterAsActive,
 } from './utils/dom-write-utils.js'
+import { state } from './state.js'
 
 // Get all works from the API
-const allWorks = await getAllWorks()
+await getAllWorks()
 
 // Check if the user is logged in and if so, activate all admin features
 const bearerToken = getCookieValue('token')
@@ -36,7 +37,9 @@ if (bearerToken !== undefined && (await isAuthenticated(bearerToken))) {
   )
 } else {
   // Deduce from fetched works all not empty categories when the user is not authenticated
-  const allCategoryIds = [...new Set(allWorks.map((work) => work.categoryId))]
+  const allCategoryIds = [
+    ...new Set(state.works.map((work) => work.categoryId)),
+  ]
   /**
    * @type {Category[]}
    */
@@ -44,7 +47,7 @@ if (bearerToken !== undefined && (await isAuthenticated(bearerToken))) {
     /**
      * @type {Work}
      */
-    const work = allWorks.find((work) => work.categoryId === categoryId)
+    const work = state.works.find((work) => work.categoryId === categoryId)
     const workCategoryName = work.category.name
     return {
       id: categoryId,
@@ -71,7 +74,7 @@ allFilterHtmlElements.forEach((filterHtmlElement) =>
       filterHtmlElement.dataset.categoryId !== undefined
         ? parseInt(filterHtmlElement.dataset.categoryId)
         : undefined
-    displayWorksByCategoryId(allWorks, categoryId, galleryHtmlElement)
+    displayWorksByCategoryId(categoryId, galleryHtmlElement)
     setFilterAsActive(filterHtmlElement, allFilterHtmlElements)
   })
 )

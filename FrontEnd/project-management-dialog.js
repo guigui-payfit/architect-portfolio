@@ -1,11 +1,5 @@
-import {
-  deleteWork,
-  getAllCategories,
-  getAllWorks,
-  postWork,
-} from './api/fetch.js'
-import { Category } from './models/category.js'
-import { Work } from './models/work.js'
+import { deleteWork, getAllCategories, postWork } from './api/fetch.js'
+import { state } from './state.js'
 import { getCookieValue } from './utils/cookie.js'
 import {
   findAllHtmlElementsByCssClass,
@@ -108,11 +102,12 @@ function closeProjectManagementDialog() {
 async function displayCategoriesInDialog() {
   const categorySelectHtmlElement = findHtmlElementById('project-category')
   categorySelectHtmlElement.innerHTML = ''
-  /**
-   * @type {Category[]}
-   */
-  const categories = await getAllCategories()
-  for (let category of categories) {
+
+  if (state.categories.length === 0) {
+    await getAllCategories()
+  }
+
+  for (const category of state.categories) {
     categorySelectHtmlElement.innerHTML += `<option value=${category.id}>${category.name}</option>`
   }
 }
@@ -147,11 +142,10 @@ async function displayDialogStepContent(step) {
   if (step === 1) {
     hide(dialogBackArrowContainerHtmlElement)
 
-    const allWorks = await getAllWorks()
     const dialogGalleryHtmlElement = findHtmlElementById(
       'project-management-dialog-gallery'
     )
-    displayWorksInsideDialog(allWorks, dialogGalleryHtmlElement)
+    displayWorksInsideDialog(dialogGalleryHtmlElement)
   } else {
     show(dialogBackArrowContainerHtmlElement)
 
@@ -185,12 +179,11 @@ function displayUploadedImage(
 }
 
 /**
- * @param {Work[]} allWorks - all works fetched from the API
  * @param {HTMLElement} parentHtmlElement - HTML element in which to display works
  */
-function displayWorksInsideDialog(allWorks, parentHtmlElement) {
+function displayWorksInsideDialog(parentHtmlElement) {
   parentHtmlElement.innerHTML = ''
-  for (let work of allWorks) {
+  for (const work of state.works) {
     const imageWrapperHtmlElement = document.createElement('div')
     imageWrapperHtmlElement.classList.add('image-wrapper')
     imageWrapperHtmlElement.dataset.workId = work.id.toString()

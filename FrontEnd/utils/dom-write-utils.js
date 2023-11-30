@@ -1,4 +1,5 @@
 import { Work } from '../models/work.js'
+import { state } from '../state.js'
 import { findAllHtmlElementsByCssClass } from './dom-read-utils.js'
 
 /**
@@ -26,21 +27,16 @@ export function displayNewWork(work, parentHtmlElement) {
 }
 
 /**
- * @param {Work[]} allWorks - all works fetched from the API
  * @param {number | undefined} categoryId - category id in database
  * @param {HTMLElement} parentHtmlElement - HTML element in which to display works
  */
-export function displayWorksByCategoryId(
-  allWorks,
-  categoryId,
-  parentHtmlElement
-) {
+export function displayWorksByCategoryId(categoryId, parentHtmlElement) {
   parentHtmlElement.innerHTML = ''
   const worksToDisplay =
     categoryId === undefined
-      ? allWorks
-      : allWorks.filter((work) => work.categoryId === categoryId)
-  for (let work of worksToDisplay) {
+      ? state.works
+      : state.works.filter((work) => work.categoryId === categoryId)
+  for (const work of worksToDisplay) {
     displayNewWork(work, parentHtmlElement)
   }
 }

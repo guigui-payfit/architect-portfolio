@@ -1,5 +1,6 @@
 import { LoginError } from '../errors/login-error.js'
 import { Work } from '../models/work.js'
+import { state } from '../state.js'
 
 export const API_BASE_URL = 'http://localhost:5678/api'
 
@@ -15,6 +16,11 @@ export async function deleteWork(workId, bearerToken) {
     },
     method: 'DELETE',
   })
+
+  if (httpResponse.ok) {
+    state.works = state.works.filter((work) => work.id !== workId)
+  }
+
   return httpResponse.ok
 }
 
@@ -24,6 +30,9 @@ export async function deleteWork(workId, bearerToken) {
 export async function getAllCategories() {
   const httpResponse = await fetch(`${API_BASE_URL}/categories`)
   const categories = await httpResponse.json()
+
+  state.categories = categories
+
   return categories
 }
 
@@ -33,6 +42,9 @@ export async function getAllCategories() {
 export async function getAllWorks() {
   const httpResponse = await fetch(`${API_BASE_URL}/works`)
   const works = await httpResponse.json()
+
+  state.works = works
+
   return works
 }
 
@@ -81,5 +93,9 @@ export async function postWork(file, title, category, bearerToken) {
     },
     method: 'POST',
   })
-  return await httpResponse.json()
+  const work = await httpResponse.json()
+
+  state.works.push(work)
+
+  return work
 }
