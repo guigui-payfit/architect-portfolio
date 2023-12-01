@@ -1,4 +1,4 @@
-import { isAuthenticated, logout } from './auth/auth.js'
+import { logout } from './auth/auth.js'
 import { getAllWorks } from './api/fetch.js'
 import { Work } from './models/work.js'
 import {
@@ -22,7 +22,7 @@ await getAllWorks()
 
 // Check if the user is logged in and if so, activate all admin features
 const bearerToken = getCookieValue('token')
-if (bearerToken !== undefined && (await isAuthenticated(bearerToken))) {
+if (bearerToken !== undefined) {
   enableAdminFeatures()
 
   const logoutHtmlElement = findHtmlElementById('logout')
