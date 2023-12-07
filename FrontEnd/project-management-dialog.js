@@ -86,6 +86,21 @@ export async function openProjectManagementDialog() {
 }
 
 /**
+ * @param {File | undefined} uploadedFile - uploaded file by the user
+ * @param {string} projectTitle - new project title filled by the user
+ * @param {string} category - new project category selected by the user
+ * @returns {boolean} true if all form inputs have valid values, else false
+ */
+function canFormBeSubmitted(uploadedFile, projectTitle, category) {
+  if (uploadedFile === undefined) {
+    return false
+  }
+  const isUploadedFileValid = uploadedFileValid(uploadedFile)
+
+  return isUploadedFileValid && projectTitle && category
+}
+
+/**
  * This method closes the project management dialog.
  */
 function closeProjectManagementDialog() {
@@ -214,19 +229,18 @@ function handleDialogFormSubmissionState() {
    */
   const fileInputHtmlElement = findHtmlElementById('file-input')
   const uploadedFile = fileInputHtmlElement.files[0]
-  if (uploadedFile === undefined) {
-    return
-  }
 
   /**
    * @type {HTMLInputElement}
    */
   const projectTitleInputHtmlElement = findHtmlElementById('project-title')
+  const projectTitle = projectTitleInputHtmlElement.value
 
   /**
    * @type {HTMLSelectElement}
    */
   const categorySelectHtmlElement = findHtmlElementById('project-category')
+  const category = categorySelectHtmlElement.value
 
   /**
    * @type {HTMLButtonElement}
@@ -235,17 +249,14 @@ function handleDialogFormSubmissionState() {
     'project-management-dialog-form-submission-button'
   )
 
-  const isUploadedFileValid = uploadedFileValid(uploadedFile)
+  formSubmissionButtonHtmlElement.disabled = !canFormBeSubmitted(
+    uploadedFile,
+    projectTitle,
+    category
+  )
 
-  if (
-    isUploadedFileValid &&
-    projectTitleInputHtmlElement.value &&
-    categorySelectHtmlElement.value
-  ) {
-    formSubmissionButtonHtmlElement.disabled = false
-  } else {
-    formSubmissionButtonHtmlElement.disabled = true
-  }
+  const isUploadedFileValid =
+    uploadedFile !== undefined ? uploadedFileValid(uploadedFile) : false
 
   const fileUploadErrorMessageHtmlElement = findHtmlElementById(
     'file-upload-error-message'
@@ -340,6 +351,10 @@ async function submitForm(event) {
    */
   const categorySelectHtmlElement = findHtmlElementById('project-category')
   const category = categorySelectHtmlElement.value
+
+  if (!canFormBeSubmitted(uploadedFile, projectTitle, category)) {
+    return
+  }
 
   const bearerToken = getCookieValue('token')
 
